@@ -3,7 +3,7 @@ using namespace std;
 struct dummy1 {
     std::string name;
     float age;
-};
+} myDum, myDum2;
 
 struct com_reg {
     unsigned int SN: 4;
