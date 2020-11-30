@@ -4,6 +4,7 @@ using namespace std;
 const int SIZE = 5;
 void display (const string sa[], int n);
 
+void changeString(string sa[], int n);
 
 
 int main () {
@@ -15,7 +16,10 @@ int main () {
     }
     cout << "Your list:\n";
     display(list, SIZE);
+    changeString(list, 3);
 
+    cout << "After change:" << endl;
+    display(list, SIZE);
     return 0;
 }
 
@@ -24,4 +28,9 @@ void display(const string sa[], int n) {
         cout << i+1 << " : " << sa[i] << endl;
     }
 }
+
+void changeString(string sa[], int n) {
+    sa[n] = 'fuck xxx!';
+}
+
 
