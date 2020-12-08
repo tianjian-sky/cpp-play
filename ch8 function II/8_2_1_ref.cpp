@@ -53,12 +53,18 @@ int main () {
 
     int cat = 1;
     int *pt = &cat;
+    int **ppt = &pt; // 指针的指针必须声明为**
     
+    cout << "var address:" << &cat << endl;
+    cout << "pointer value" << pt << endl;
+    cout << "pointer address (&pt)" << &pt << endl;
+    cout << "**pt value" << ppt << endl;
     /*
     * 引用变量初始化为某个指针的解除引用后的值，此时此引用变量指向指针变量所指向的变量
+    * 将会沿着指针链条不断地向上追溯，一直找到根指针指向的变量，与其进行绑定
     */
     
-    int &animal = *pt; 
+    int &animal = **ppt; 
     
     int dog = 99;
     pt = &dog;  // 改变的是pt
@@ -103,7 +109,7 @@ int main () {
     int bigHouse = 1099;
     const &c_ref = house;
 
-    c_ref = bigHouse; // error: assignment of read-only reference 'c_ref'
+    // c_ref = bigHouse; // error: assignment of read-only reference 'c_ref'
 
     return 0; 
 }
