@@ -40,13 +40,18 @@ int main () {
     double c7 = refcube(side + 1.0 - 1.0);
 
     /**
-    lvalue , rvalue
-    rvalue指的是不指向任何地方，一般都是temporary and short lived;
+    lvalue 可修改的内存块 
+    rvalue： 不能通过地址访问的值，指的是不指向任何地方，一般都是temporary and short lived;
     而lvalue则相反，一般都是作为变量保存；
     很多时候也被认为是“=”左右两边；
     或者理解为，lvalue是一个container; rvalue是container的things;
     int y;
     521 = y; // error
+    */
+
+    /*
+    * 引用返回类型是左值
+    * 非引用返回类型是右值，这种返回值位于临时内存单元中，下一条语句执行时就可能不存在
     */
 
 

@@ -56,6 +56,16 @@ int main () {
     display(dup);
     set_pc(four);
 
+    /*
+    * accumulate（。。）为何可以是左值，因为他返回一个引用，是一个可修改的内存块。
+    * four为何可以是右值
+    */
+
+    /*
+    * 引用返回类型是左值
+    * 非引用返回类型是右值，这种返回值位于临时内存单元中，下一条语句执行时就可能不存在
+    */
+
     accumulate(dup, five) = four;
     std::cout << "Displaying dup after ill-advised assignment:" << std::endl;
     display(dup);
@@ -80,6 +90,15 @@ int main () {
     * 2.2 返回值是普通引用
     * a) 接收函数返回值的变量是引用类型，不会发生复制
     * b) 接收函数返回值的变量不是引用类型时，会发生复制
+    */
+
+    /**
+    * 为何要返回引用？
+    * 函数返回值拷贝问题
+    *
+    * 当返回一个结构时，将把整个结构复制到一个临时位置，在将这个拷贝复制给变量
+    * 当返回引用时，省去中间步骤，效率更高
+    *
     */
     std::cout << "Test return value with/without ref:" << std::endl;
 
