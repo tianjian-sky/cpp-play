@@ -16,6 +16,11 @@ int main () {
     using namespace std;
     int code;
 
+    int arr [4] = {1,2,3,4};
+    int * pt = arr;
+
+    cout << *(pt+3) << endl;
+
     cout << "How many lines of code do you need?";
     cin >> code;
     cout << "Here's Betsy's estimate:\n";
