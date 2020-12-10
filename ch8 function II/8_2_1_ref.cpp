@@ -7,12 +7,36 @@ int main () {
 
     int rats = 101;
     int &rodents = rats;
+    const int &rodents_const = rats;
 
     cout << "rats = " << rats << endl;
     cout << "rodents = " << rodents << endl;
-
     cout << "rats address = " << &rats << endl;
     cout << "rodents address = " << &rodents << endl;
+
+
+    /*
+    * 引用作为右值赋值，看看新变量的地址
+    */
+    int temp = rodents; // 引用赋值给常规变量，常规变量地址是新的
+    const int temp_const = rodents; // 引用赋值给const变量，const 变量地址是新的
+    int & temp_ref = rodents; // 引用赋值给引用变量，引用变量地址就是引用的地址 (别名的别名)
+    const int & temp_ref_const = rodents; // 引用赋值给常引用变量，常引用变量地址就是引用的地址 (别名的别名)
+
+    cout << "\n1. rvalue is non-const ref\n" << endl;
+    cout << "temp address = " << &temp << endl;
+    cout << "const temp_const address = " << &temp_const << endl;
+    cout << "ref temp_ref address = " << &temp_ref << endl;
+    cout << "ref const temp_ref_const address = " << &temp_ref_const << endl;
+
+    int temp_c = rodents_const; // 常引用赋值给常规变量，常规变量地址是新的
+    const int temp_c_const = rodents_const; // 常引用赋值给const变量，const 变量地址是新的
+    //int & temp_c_ref = rodents_const; // error： 普通引用不能接收常引用
+    const int & temp_c_ref_const = rodents_const; // 常引用赋值给常引用变量，常引用变量地址就是引用的地址 (别名的别名)
+    cout << "\n2. rvalue is const ref\n" << endl;
+    cout << "temp_c address = " << &temp_c << endl;
+    cout << "const temp_c_const address = " << &temp_c_const << endl;
+    cout << "ref const temp_c_ref_const address = " << &temp_c_ref_const << endl;
 
     /**
     * 引用变量初始化后相当于建立绑定关系，以后再赋值不会影响他们的绑定关系了

@@ -82,25 +82,22 @@ int main () {
 
 
     /**
-    * 函数返回值拷贝问题
+    * 为何要返回引用？
+        C++之中函数的返回分为以下几种情况：
+	    1）main的返回值：返回0表示运行成功。
+	    2）返回非引用类型：函数的返回值用于初始化在跳出函数时候创建的临时对象。用函数返回值来初始化临时对象与用实参初始化形参的方法是一样的。如果返回类型不是引用的话，在函数返回的地方，会将返回值复制给临时对象。且其返回值既可以是局部对象，也可以是表达式的结果。
+	    3）返回引用：当函数返回引用类型的时候，没有复制返回值，而是返回对象的引用（即对象本身）。
+        函数返回引用：实际上是一个变量的内存地址，既然是内存地址的话，那么肯定可以读写该地址所对应的内存区域的值，即就是“左值”，可以出现在赋值语句的左边。
+	    1）函数返回引用的时候，可以利用全局变量（作为函数返回），或者在函数的形参表中有引用或者指针（作为函数返回），这两者有一个共同点，就是返回执行完毕以后，变量依然存在，那么返回的引用才有意义。
     *
-    * 1.当函数返回值不是引用类型是，会发生复制，且接收函数返回值的变量不能是引用类型
-    * 2.当函数返回值是引用类型:
-    * 2.1 返回值是常引用，不复制
-    * 2.2 返回值是普通引用
-    * a) 接收函数返回值的变量是引用类型，不会发生复制
-    * b) 接收函数返回值的变量不是引用类型时，会发生复制
     */
 
     /**
-    * 为何要返回引用？
-    * 函数返回值拷贝问题
-    *
-    * 当返回一个结构时，将把整个结构复制到一个临时位置，在将这个拷贝复制给变量
-    * 当返回引用时，省去中间步骤，效率更高
-    *
+    * 引用变量作为rvalue赋值，lvalue的地址是否与rvalue相同，详见8_2_1
     */
-    std::cout << "Test return value with/without ref:" << std::endl;
+
+
+    std::cout << "\n\nTest return value with/without ref:" << std::endl;
 
     std::cout << "1.return value without ref:" << std::endl;
     std::cout << "before change:" << std::endl;
@@ -111,7 +108,7 @@ int main () {
     display(t1);
     std::cout << "sctuct address:" << &t1_t << std::endl;
 
-    std::cout << "2.return value with ref:" << std::endl;
+    std::cout << "\n\n2.return value with ref:" << std::endl;
     std::cout << "before change:" << std::endl;
     display(t2);
     std::cout << "sctuct address:" << &t2 << std::endl;
@@ -123,7 +120,7 @@ int main () {
     std::cout << "sctuct address (received by ref):" << &t2_ref << std::endl;
 
 
-    std::cout << "3.return value with !!cosnt!! ref:" << std::endl;
+    std::cout << "\n\n3.return value with !!cosnt!! ref:" << std::endl;
     std::cout << "before change:" << std::endl;
     display(t2);
     std::cout << "sctuct address:" << &t2 << std::endl;
