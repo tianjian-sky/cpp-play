@@ -21,6 +21,7 @@ class Time {
         Time operator-(const Time &t) const;
         Time operator*(double mult) const;
         friend Time operator*(double mult, const Time & t);
+        friend std::ostream & operator << (std::ostream & os, const Time & t);
         void Show() const;
 };
 
