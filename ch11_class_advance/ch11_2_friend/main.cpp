@@ -29,6 +29,8 @@
  * 
 */ 
 
+void classPropVisitor (Time & t);
+
 int main() {
     using std::cout;
     using std::endl;
@@ -39,6 +41,9 @@ int main() {
     Time diff;
     Time adjusted;
     Time adjusted2;
+
+    // cout << "Using non friend to visit class private member:" << endl; // error: 'int Time::hours' is private
+    // classPropVisitor(coding); // error: 'int Time::hours' is private
 
     cout << "Planning time = " << endl;
     planning.Show();
@@ -101,4 +106,8 @@ int main() {
     cout << "10.0 * Tosca:" << 10.0 * tosca << endl;
 
     return 0;
+}
+
+void classPropVisitor (Time & t) {
+    std:: cout << t.hours << std::endl;
 }
