@@ -17,6 +17,7 @@ using std::cout;
 **/
 
 Stonewt::Stonewt(double lbs) {
+    cout << "constructor called Stonewt(double lbs)" << std::endl;
     stone = int (lbs) / Lbs_per_stn;
     pds_left = int(lbs) % Lbs_per_stn + lbs - int(lbs);
     pounds = lbs;
