@@ -41,7 +41,7 @@ Stonewt::Stonewt() {
     stone = pounds = pds_left = 0;
 }
 Stonewt::~Stonewt() {
-    cout << "descructor called ~Stonewt()" << std::endl;
+    cout << "descructor called ~Stonewt()::" << pounds << std::endl;
 }
 Stonewt Stonewt::testReturnCast() {
     return pounds;
