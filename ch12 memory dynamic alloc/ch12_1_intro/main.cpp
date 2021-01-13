@@ -19,7 +19,9 @@ int main () {
         cout << "headline1: " << headline1 << endl;
 
         /**
-         * 按值传递headline2导致headline2析构函数被调用
+         * 类对象headline2按值传递给函数
+         * 函数会创建类对象的一个副本，因此函数结束时此副本会被销毁，析构函数被调用
+         * 
         */
         callme2(headline2);
         cout << "headline2: " << headline2 << endl;
