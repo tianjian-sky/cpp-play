@@ -36,22 +36,34 @@ int main () {
 
     Stonewt * s2 = new Stonewt((double)277);
 
-    cout << "segment 2:" << std::endl;
     /**
     * 转换过程中生成临时变量，过后临时变量立即销毁，所以调用了析构函数
     */
+    cout << "segment 2: cast using constructor" << std::endl;
     incognito = (Stonewt) (double) 1;
 
-    cout << "segment 3:" << std::endl;
+    
+    /*
+    * 类对象初始化
+    */
+    cout << "segment 3: initial using constructor" << std::endl;
     Stonewt s3 ((double) 3);
-    incognito = s3; // 两边都是同类型，不用转了，也不会产生临时变量
+    
 
-    cout << "segment 4:" << std::endl;
     /**
     * 函数实参需要转换，在入函数时调用构造函数，
     * 此临时变量在函数结束时销毁，调用析构函数
     */
+    cout << "segment 4: cast during function parameter" << std::endl;
     display((double) 3, 1);
+
+    /* 
+    * 两边都是同类型，不用转了，也不会产生临时变量
+    */
+    cout << "segment 5: a = b same type" << std::endl;
+    incognito = s3;
+
+
     cout << "main function end." << std::endl;
     return 0;
 }
