@@ -7,23 +7,49 @@ class StringBad {
         char * str;
         int len;
 
-        /**
-         * 不能在类声明中初始化静态成员变量，因为声明描述了如何分配内存，但是不分配内存
-        */
-        // static int num_strings = 0; error: ISO C++ forbids in-class initialization of non-const static member 'StringBad::num_strings'
-        static int num_strings;
+        
+        int a;
+        int b;
 
         /*
-         * 例外：可以在类声明中初始化的静态成员
-        * 1）const整型 -std=c++11
-        * 2）枚举型 -std=c++11
+        * You cannot define static enum in C++.  static can only be the variable of the enum, not the type itself!
+        * 
+        * static enum {A, B, C, D}; // error: a storage class can only be specified for objects and functions
         */
-        const int canInitMember = 1;
-
         enum {A, B, C, D};
-        long arr[D];
+        static long arr[D];
 
     public:
+        int c;
+        int d;
+        /**
+         * c++11 以下，不能在类声明中初始化静态成员变量
+         * 
+        */
+        /*
+         * 例外：可以在类声明中初始化的静态成员
+        * 1）const整型
+        * 2）枚举型
+        * class xxx {
+        *   static const int canInitMember = 1;
+            enum {A, B, C, D};
+        * }
+        */
+        static int num_strings;
+        const static int canInitMember = 1;
+
+
+        /*
+        * C++11允许了类在声明的时候直接给Non-static Data Member复值。
+        */
+        int memberInitInDefination = 3;
+
+        /*
+        * 3.类的enum类型成员的访问
+        */
+        enum {S, M, L, XL};
+        enum class_typed_enum {alpha = 1001, beta, gamma} class_typed_enum_var1, class_typed_enum_var2;
+
         StringBad(const char *s);
         StringBad();
         ~StringBad();

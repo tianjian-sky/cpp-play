@@ -33,6 +33,9 @@ StringBad::StringBad() {
     cout << num_strings << ":\"" << str << "\" default object created\n";
 }
 
+/**
+ * 在构造函数中使用new来分配内存时，必须在相应的析构函数中使用delete来释放内存
+*/
 StringBad:: ~StringBad() {
     cout << "\"" << str << "\" object deleted, ";
     --num_strings;
