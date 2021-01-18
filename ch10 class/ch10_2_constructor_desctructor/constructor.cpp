@@ -11,9 +11,21 @@
 */
 
 
+/**
+ * c++ 类对象初始化
+ * 1.复制初始化（int a = 5;）
+ * 2.直接初始化（int a(5);） 
+    * A x(2);　　//直接初始化，调用构造函数
+    * A y = x;　　//复制初始化，调用复制构造函数
+ * 
+ * ClassName xxx; 这样其实已经初始化了！！，调用默认的无参构造函数
+ */
 
 
 int main () {
+    /**
+    * ClassName xxx; 这样其实已经初始化了！！，调用默认的无参构造函数
+    */
     Stock fluffy_the_cat;
     fluffy_the_cat.acquire("NanoSmart", 20, 12.50);
     fluffy_the_cat.show();

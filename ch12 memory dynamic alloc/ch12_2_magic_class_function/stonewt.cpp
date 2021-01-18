@@ -49,7 +49,7 @@ Stonewt Stonewt::testReturnCast() {
 
 // 复制构造函数
 Stonewt::Stonewt(const Stonewt & before) {
-    cout << "copy constructor called, pounds = " << before.pounds << std:: endl;
+    cout << "--------------->copy constructor called, pounds = " << before.pounds << std:: endl;
     stone = before.stone;
     pds_left = before.pds_left;
     pounds = before.pounds;

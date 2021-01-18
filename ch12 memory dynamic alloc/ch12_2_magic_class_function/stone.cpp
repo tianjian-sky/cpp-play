@@ -29,6 +29,45 @@ Stonewt displayByPassValue(const Stonewt st, int n);
  * 复制构造函数
  * Class_name(const Class_name &);
  * 有何功能：逐个复制非静态成员的值
+ * 默认都是进行浅拷贝
+ * 
+ * #include<iostream>
+    #include<assert.h>
+    using namespace std;
+    class Rect
+    {
+    public:
+        Rect()
+        {
+        p=new int(100);
+        }
+        
+        Rect(const Rect& r)
+        {
+        width=r.width;
+            height=r.height;
+        p=new int(100); // 指针变量需要在复制时重新申请内存，防止析构时重复delete
+            *p=*(r.p); // 
+        }
+        
+        ~Rect()
+        {
+        assert(p!=NULL);
+            delete p;
+        }
+    private:
+        int width;
+        int height;
+        int *p;
+    };
+    int main()
+    {
+        Rect rect1;
+        Rect rect2(rect1);
+        return 0;
+    }
+ * 
+ * 
  * 
 */
 
@@ -40,12 +79,36 @@ Stonewt displayByPassValue(const Stonewt st, int n);
     如果在前两种情况不使用拷贝构造函数的时候，就会导致一个指针指向已经被删除的内存空间。对于第三种情况来说，初始化和赋值的不同含义是拷贝构造函数调用的原因。事实上，拷贝构造函数是由普通构造函数和赋值操作符共同实现的。描述拷贝构造函数和赋值运算符的异同的参考资料有很多。
 */
 
+/*
+* 对于有些场景，比如带隐式转换创建临时对象再拷贝构造，
+* 编译优化可以跳过拷贝构造，但是必须验证拷贝构造存在并且可用。
+* However, even if the compiler omits the call to the copy/move constructor, 
+* thecopy/move constructor must exist and must be accessible (e.g., not private) at thatpoint in the program.
+* https://www.zhihu.com/question/49068866
+* 
+*  Stonewt incognito = (Stonewt) (double)275;
+* 
+*/
+
 int main () {
+
+    /*
+    * 对于有些场景，比如带隐式转换创建临时对象再拷贝构造，
+    * 编译优化可以跳过拷贝构造，但是必须验证拷贝构造存在并且可用。
+    * However, even if the compiler omits the call to the copy/move constructor, 
+    * thecopy/move constructor must exist and must be accessible (e.g., not private) at thatpoint in the program.
+    * https://www.zhihu.com/question/49068866
+    * 
+    *  Stonewt incognito = (Stonewt) (double)275;
+    * 
+    * 如果此时将复制构造函数移动到private中，则编译报错：
+    *  error: 'Stonewt::Stonewt(const Stonewt&)' is private
+    *  error: within this context Stonewt incognito = (Stonewt) (double)275; 
+    */
 
     Stonewt incognito = (Stonewt) (double)275; // 如果有二义性，则放弃尝试 (不能有多个匹配的转换函数)
     Stonewt wolfe((double)285.7); // 隐式转换场景 e）上述任何情况下，使用可转换为double类型的内置函数时
     Stonewt taft((double)21, 8);
-
 
     /**
     Java和C++中new用法的区别
