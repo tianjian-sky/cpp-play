@@ -173,6 +173,9 @@ int main () {
 
     cout << "main function end." << std::endl;
     return 0;
+    /**
+     * 临时变量作为引用参数传入，必须使用const引用接收
+     */
 }
 
 void display(const Stonewt &st, int n) {

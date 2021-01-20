@@ -61,3 +61,20 @@ void Stonewt::show_lbs() const {
 void Stonewt::show_stn() const {
     cout << pounds << " pounds\n";
 }
+
+// 赋值运算符重载
+/**
+ * 临时变量作为引用参数传入，必须使用const引用接收
+ */
+Stonewt & Stonewt::operator= (const Stonewt &st) {
+    cout << "++++++++++++++++>Assignment called, pounds = " << st.pounds << std:: endl;
+    if (this == &st) {
+        return *this;
+    }
+    stone = st.stone;
+    pds_left = st.pds_left;
+    pounds = st.pounds;
+    return *this;
+}
+
+
