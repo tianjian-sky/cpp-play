@@ -56,8 +56,11 @@ class String {
         String (const char *s);
         String();
         String(const String &);
+        /*
+        * 但是由于析构函数是没有参数的,那么从而无法通过参数的不同来达到重载多个析构函数的目的,从而析构函数只能有一个.
+        */
         ~String();
-        int length () const {return len};
+        int length () const {return len;};
         // overload operator
         String & operator=(const String &);
         String & operator=(const char *);
