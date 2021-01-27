@@ -14,6 +14,9 @@ class TableTennisPlayer {
         void Name() const;
         bool HasTable() const {return hasTable;};
         void ResetTable(bool v) { hasTable = v;};
+        // 复制构造函数
+        TableTennisPlayer(const TableTennisPlayer &);
+        ~TableTennisPlayer();
 };
 
 # endif
