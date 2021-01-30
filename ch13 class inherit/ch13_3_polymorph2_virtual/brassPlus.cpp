@@ -2,9 +2,6 @@
 #include "brass.h"
 #include "brassPlus.h"
 
-using std:: cout;
-using std::endl;
-
 BrassPlus::BrassPlus(const std::string & s, long an, double bal, double ml, double r) {
     maxLoan = ml;
     owesBank = 0.0;

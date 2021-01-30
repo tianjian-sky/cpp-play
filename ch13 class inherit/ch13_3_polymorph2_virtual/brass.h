@@ -1,6 +1,7 @@
 #ifndef BRASS_H_
 #define BRASS_H_
 
+#include "std.h"
 #include <string>
 
 class Brass

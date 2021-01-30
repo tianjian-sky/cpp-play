@@ -5,13 +5,7 @@ using std::cout;
 using std::endl;
 using std::string;
 
-typedef std::ios_base::fmtflags format;
-typedef std::streamsize precis;
-format setFormat();
-void restore(format f, precis p);
-
-
-Brass::Brass(const std::string & s = "Nullbody", long an = -1, double bal = 0.0) {
+Brass::Brass(const std::string & s, long an, double bal) {
     fullName = s;
     acctNum = an;
     balance = bal;
@@ -50,13 +44,3 @@ void Brass::ViewAcct () const {
     cout << "Balance: $" << balance << endl;
     restore(initialState, prec);
 }
-
-format setFormat() {
-    return cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
-}
-
-void restore(format f, precis p) {
-    cout.setf(f, std::ios_base::floatfield);
-    cout.precision(p);
-}
-
