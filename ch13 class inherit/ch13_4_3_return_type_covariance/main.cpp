@@ -99,7 +99,6 @@ int main () {
         std::cout << "Test funcion hide:" << std::endl;
         /*
         * 重新定义继承的方法，无论参数列表是否相同，基类的同名方法被隐藏
-        * JAVA里不是这样！！
         */
         //no matching function for call to 'BrassPlus::printName()'
         // b2.printName();
