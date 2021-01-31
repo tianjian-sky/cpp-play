@@ -3,7 +3,8 @@
 #include "brass.h"
 #include "brassPlus.h"
 
-BrassPlus::BrassPlus(const std::string & s, long an, double bal, double ml, double r) {
+BrassPlus::BrassPlus(const std::string & s, long an, double bal, double ml, double r)
+:Brass(s, an, bal) {
     maxLoan = ml;
     owesBank = 0.0;
     rate = r;
@@ -30,7 +31,7 @@ void BrassPlus::Withdraw(double amt) {
     format initialState = setFormat();
     precis prec = cout.precision(2);
 
-    double bal = Balance();
+    double bal = balance;
     if (amt <= bal) {
         Brass::Withdraw(amt);
     } else if (amt <= bal + maxLoan - owesBank) {

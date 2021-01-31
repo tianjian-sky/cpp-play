@@ -15,7 +15,10 @@ class Brass
         virtual void Withdraw(double amt);
         double Balance() const;
         virtual void ViewAcct () const;
-        virtual ~Brass() {}
+        virtual ~Brass() {
+            std::cout << "parent descructor called:" << fullName << std::endl;
+        }
+        std::string getName () { return fullName; };
 };
 
 #endif

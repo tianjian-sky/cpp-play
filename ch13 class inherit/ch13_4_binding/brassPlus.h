@@ -13,7 +13,10 @@ class BrassPlus : public Brass
     public:
         BrassPlus(const std::string & s = "Nullbody", long an = -1, double bal = 0.0, double ml = 500, double r = 0.11125);
         BrassPlus(const Brass & ba, double ml = 500, double r = 0.11125);
-        void ViewAcct() const;
+        virtual ~BrassPlus() {
+            std::cout << "sub descructor called:" << Brass::getName() << std::endl;
+        }
+        virtual void ViewAcct() const;
         virtual void Withdraw(double amt);
         void ResetMax(double m) { maxLoan = m; };
         void ResetRate(double r) { rate = r; };

@@ -3,7 +3,8 @@
 #include "brass.h"
 #include "brassPlus.h"
 
-BrassPlus::BrassPlus(const std::string & s, long an, double bal, double ml, double r) {
+BrassPlus::BrassPlus(const std::string & s, long an, double bal, double ml, double r)
+:Brass(s, an, bal) {
     maxLoan = ml;
     owesBank = 0.0;
     rate = r;

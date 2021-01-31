@@ -2,7 +2,7 @@
 #define BRASS_H_
 
 #include <string>
-
+#include <iostream>
 class Brass
 {
     private:
@@ -15,7 +15,11 @@ class Brass
         virtual void Withdraw(double amt);
         double Balance() const;
         virtual void ViewAcct () const;
-        virtual ~Brass() {}
+        virtual ~Brass() {
+            std::cout << "parent descructor called:" << fullName << std::endl;
+        }
+        std::string getName () { return fullName; };
+        virtual void printName() { std:: cout << fullName << std::endl;};
 };
 
 #endif
