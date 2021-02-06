@@ -1,4 +1,6 @@
 #include "studentc.h"
+#include <string>
+
 using std::ostream;
 using std::endl;
 using std::istream;
@@ -25,8 +27,8 @@ std::istream & operator >>(std::istream & is, Student & stu) {
     is >> stu.name;
     return is;
 }
-std::istream & getLine(std::istream & is, Student & stu) {
-    getLine(is, stu.name);
+std::istream & getline(std::istream & is, Student & stu) {
+    getline(is, stu.name);
     return is;
 }
 std::ostream & operator <<(std::ostream & os, const Student & stu) {
