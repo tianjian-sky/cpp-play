@@ -1,7 +1,7 @@
 #ifndef HAS_DMA_H_
 #define HAS_DMA_H_
 #include <iostream>
-#include "dma.h";
+#include "dma.h"
 
 class hasDMA : public baseDMA {
     private:
