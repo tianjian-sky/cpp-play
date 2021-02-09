@@ -6,7 +6,7 @@ using std::endl;
 using std::istream;
 using std::string;
 
-double Student::Average() const {
+double Student::Average() {
     if (scores.size() > 0) {
         return scores.sum() / scores.size();
     } else {

@@ -9,6 +9,18 @@ const int pupils = 3;
 const int quizzes = 5;
 
 int main () {
+
+    /*
+    * typedef放在类的私有部分，只可以公有私有成员都可修饰，放在类的公有部分，只能修饰公有成员 (出现顺序？)
+    */
+    
+    /*
+    * 关闭隐式转换
+    * 防止不小心写错出现这样的隐式转换
+    * Student doh("Homer", 10);
+    * homer = 5; // 本意是homer[6] = 5;
+    */
+    
     Student ada[pupils] = {
         Student(quizzes),
         Student(quizzes),
@@ -20,7 +32,8 @@ int main () {
     }
     cout << "\n student List:\n";
     for (int i = 0; i < pupils; i++) {
-        cout << ada[i].Name() << endl;
+        const Student & temp = ada[i];
+        cout << temp.Name() << endl; // 对于常量引用调用成员方法，需要使用const成员函数, 否则编译期间报错
     }
     cout << "\nResults:\n";
     for (i = 0; i < pupils; i++) {
