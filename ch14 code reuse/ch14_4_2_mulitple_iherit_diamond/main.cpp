@@ -17,15 +17,30 @@ int main () {
     Singer bev("Bevely Hills", 522L, 3);
     Waiter w_temp;
     Waiter s_temp;
-    Worker *pw[LIM] = {&bob, &bev, &w_temp, &s_temp}; // Worker *temp = pw[0] = &bob (*Waiter)
 
-    int i;
-    for (i = 2; i < LIM; i++) {
-        pw[i] -> Set();
-    }
-    for (i = 0; i < LIM; i++) {
-        pw[i] -> Show();
-        std::cout << std::endl;
-    }
+    std::cout << "Test diamond inherit:" << std::endl;
+
+    /*
+    *
+    * Singer, Waiter都继承自Worker，
+    * S_W 同时继承了Singer，Waiter，因此S_W的实例将保护两个Worker组件
+    * 
+    */
+
+    Singer_Waiter sw = Singer_Waiter();
+
+    /*
+    * 如果将混合子类对象的地址赋值给基类的指针，将出现二义性错误。
+    * 因为钻石继承的情况下，子类包含两个基类的对象，有两个可能的地址，不知道该选择哪个地址
+    */
+
+    //Worker *w = &sw; // error: 'Worker' is an ambiguous base of 'Singer_Waiter'
+
+    /*
+    * 这种情况下，可以使用强制类型转换，明确要指向子类中从那条路径继承来的共有基类对象
+    */
+
+    Worker *w1 = (Waiter *) &sw;
+    Worker *w2 = (Singer *) &sw;
     return 0;
 }

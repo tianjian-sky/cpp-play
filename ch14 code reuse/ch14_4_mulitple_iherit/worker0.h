@@ -41,5 +41,4 @@ class Singer : public Worker {
         void Show() const;
 };
 
-
 #endif
