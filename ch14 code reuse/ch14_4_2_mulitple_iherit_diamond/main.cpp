@@ -27,8 +27,19 @@ int main () {
     * 
     */
 
-    Singer_Waiter sw = Singer_Waiter();
-
+    Singer_Waiter sw("diamond", 314L, 3, 5); //  继承的基类的构造函数都会调用
+    
+    /*
+    * 多继承的同名方法调用，出现二义性错误
+    */
+    // sw.Show(); // error: request for member 'Show' is ambiguous
+    /*
+    * 这种情况下，可以使用instance.ParentClass::Member()指定调用的是哪个继承对象的方法
+    * 更好的做法是在子类中重新定义继承的方法
+    */
+    sw.Singer::Show();
+    
+    
     /*
     * 如果将混合子类对象的地址赋值给基类的指针，将出现二义性错误。
     * 因为钻石继承的情况下，子类包含两个基类的对象，有两个可能的地址，不知道该选择哪个地址
