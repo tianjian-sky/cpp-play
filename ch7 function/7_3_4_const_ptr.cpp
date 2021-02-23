@@ -54,7 +54,7 @@ int main () {
     wages=&wages[0]
     wages[1] <--> *(wages+1)
 区别：
-1.数组名是常量，不能修改
+1.数组名是常量指针，不能修改
     wages = wages + 1; // invalid
     pw = pw + 1 // valid
 2.对数组名运用sizeof，得到的是整个数组的长度，对指针用sizeof，得到的是指针的长度
