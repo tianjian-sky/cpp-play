@@ -1,8 +1,9 @@
 #include "stacktp.h"
-
+using std::cin;
+using std::cout;
+using std::endl;
 
 /*
-* 模板类的实例化，具体化
 * 成员模板
 * 1. 如何在模板类中定义模板类，及模板类成员
 * 2. 如何在模板类中定义模板成员方法。
