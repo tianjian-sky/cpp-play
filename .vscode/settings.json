@@ -1,13 +1,126 @@
 {
+    // 左侧文件列表一直显示对齐的竖线
+    "workbench.tree.renderIndentGuides": "always",
+    // 左侧文件列表层级之间的缩进宽度
+    "workbench.tree.indent": 30,
+    // 左侧文件列表前面的icon图标主题
+    "workbench.iconTheme": "vscode-icons-mac",
+    //始终允许不受信任的文件引入受信任的工作区，而不显示提示
+    "security.workspace.trust.untrustedFiles": "open",
+    // 打开文件是否覆盖
+    "workbench.editor.enablePreview": true,
+    // 不显示vscode启动欢迎页
+    "workbench.startupEditor": "welcomePage",
+    // 控制资源管理器是否在把文件删除到废纸篓时进行确认
+    "explorer.confirmDelete": true,
+    "editor.codeActionsOnSave": {
+        // 每次保存的时候将代码按eslint格式进行修复
+        "source.fixAll.eslint": true
+    },
+    // 启用ESLint作为已验证文件的格式化程序
+    "eslint.format.enable": false,
+    // js格式化程序
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features" // 为 JavaScript 和 TypeScript 提供丰富的语言支持
+    },
+    // 设置缩进
+    "editor.tabSize": 4,
+    // 每次保存的时候自动格式化
+    "editor.formatOnSave": false,
+    // vscode默认启用了根据文件类型自动设置tabsize的选项
+    "editor.detectIndentation": false,
+    // 在不受支持的语言与Emmet支持的语言之间添加映射，表示按映射的语言处理不受支持的语言
+    "emmet.includeLanguages": {
+        "vue": "html",
+        "vue-html": "html",
+        "wxml": "html"
+    },
+    // 设置html标签缩进
+    "vetur.format.options.tabSize": 4,
+    // vetur格式化
+    "vetur.format.defaultFormatter.html": "js-beautify-html",
+    "vetur.format.defaultFormatter.css": "prettier",
+    "vetur.format.defaultFormatter.postcss": "prettier",
+    "vetur.format.defaultFormatter.scss": "prettier",
+    "vetur.format.defaultFormatter.less": "prettier",
+    "vetur.format.defaultFormatter.stylus": "stylus-supremacy",
+    "vetur.format.defaultFormatter.js": "prettier",
+    "vetur.format.defaultFormatter.ts": "prettier",
+    "vetur.format.defaultFormatter.sass": "sass-formatter",
+    "vetur.format.defaultFormatterOptions": {
+        "js-beautify-html": {
+            // html标签格式化: auto|force|force-aligned|force-expand-multiline
+            "wrap_attributes": "auto"
+        },
+        "prettier": {
+            "singleQuote": true, // 单引号
+            "semi": false, // 句尾不加;
+            "arrowParens": "avoid", // allow paren-less arrow functions (x) => {} 箭头函数参数只有一个时是否要有小括号，avoid：省略括号
+            "htmlWhitespaceSensitivity": "ignore", //忽略自闭合标签
+            "trailingComma": "none", // 对象最后一个属性是否加 (,) 逗号
+            "printWidth": 1000 // 换行长度，默认80
+        }
+    },
+    // 代码选中高亮
+    "workbench.colorCustomizations": {
+        "editor.selectionHighlightBackground": "#787e7b"
+    },
+    "editor.rulers": [],
     "files.associations": {
         "iostream": "cpp",
         "ostream": "cpp",
+        "__bit_reference": "cpp",
+        "__functional_03": "cpp",
+        "__hash_table": "cpp",
+        "__mutex_base": "cpp",
+        "__node_handle": "cpp",
+        "__tree": "cpp",
+        "__tuple": "cpp",
+        "atomic": "cpp",
+        "complex": "cpp",
+        "deque": "cpp",
+        "iterator": "cpp",
+        "memory_resource": "cpp",
+        "filesystem": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "istream": "cpp",
+        "map": "cpp",
+        "memory": "cpp",
+        "optional": "cpp",
+        "random": "cpp",
+        "sstream": "cpp",
+        "stack": "cpp",
+        "streambuf": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "system_error": "cpp",
+        "tuple": "cpp",
+        "unordered_map": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp",
+        "vector": "cpp",
+        "new": "cpp",
+        "__bits": "cpp",
+        "__config": "cpp",
+        "__debug": "cpp",
+        "__errc": "cpp",
+        "__functional_base": "cpp",
+        "__locale": "cpp",
+        "__nullptr": "cpp",
+        "__split_buffer": "cpp",
+        "__string": "cpp",
+        "__threading_support": "cpp",
+        "algorithm": "cpp",
         "array": "cpp",
-        "*.tcc": "cpp",
+        "bit": "cpp",
+        "bitset": "cpp",
         "cctype": "cpp",
+        "chrono": "cpp",
         "clocale": "cpp",
         "cmath": "cpp",
         "cstdarg": "cpp",
+        "cstddef": "cpp",
         "cstdint": "cpp",
         "cstdio": "cpp",
         "cstdlib": "cpp",
@@ -16,17 +129,17 @@
         "cwchar": "cpp",
         "cwctype": "cpp",
         "exception": "cpp",
-        "system_error": "cpp",
-        "type_traits": "cpp",
-        "fstream": "cpp",
         "initializer_list": "cpp",
+        "iomanip": "cpp",
+        "ios": "cpp",
         "iosfwd": "cpp",
-        "istream": "cpp",
         "limits": "cpp",
-        "new": "cpp",
+        "locale": "cpp",
+        "mutex": "cpp",
+        "numeric": "cpp",
+        "ratio": "cpp",
         "stdexcept": "cpp",
-        "streambuf": "cpp",
-        "typeinfo": "cpp",
-        "string": "cpp"
+        "type_traits": "cpp",
+        "typeinfo": "cpp"
     }
 }

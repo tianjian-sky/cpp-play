@@ -1,13 +1,13 @@
 /**
  * dynamic_cast
- * 
+ *
  * https://learn.microsoft.com/zh-cn/cpp/cpp/dynamic-cast-operator?view=msvc-170
- * 
+ *
     对指向装箱枚举的基础类型的指针的 dynamic_cast 将在运行时失败，返回 0 而不是转换后的指针。
 
     如果 type-id 是指向值类型的内部指针，在运行时强制转换失败时，dynamic_cast 将不再引发异常。 强制转换现在将返回 0 指针值，而不是引发异常。
- 
-     
+
+
     基类一定要是多态型的，必须有一个虚方法，否则不能dynamic_case
     https://stackoverflow.com/questions/15114093/getting-source-type-is-not-polymorphic-when-trying-to-use-dynamic-cast/15114118
     You need at least a virtual function - typically, if no others are suitable, the destructor:
@@ -27,29 +27,35 @@ dynamic_cast 用于类继承层次间的指针或引用转换。主要还是用�
 ————————————————
 版权声明：本文为CSDN博主「有温度的程序员」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/weixin_44218779/article/details/125001020
- 
- * 
+
+ *
  */
+
+/*
+虚基类与虚继承
+
+虚继承的目的是让某个类做出声明，承诺愿意共享它的基类。
+其中，这个被共享的基类就称为虚基类（Virtual Base Class），本例中的 A 就是一个虚基类。在这种机制下，不论虚基类在继承体系中出现了多少次，在派生类中都只包含一份虚基类的成员。
+
+*/
 #include <iostream>
 using std::cout;
 using std::endl;
 
-/*
-        A
-      /   \
-    B       C
-      \    /
-        D 
-*/
-class A {virtual void f();};
-class B : public A {virtual void f();};
-class C : public A {virtual void f();};
-class D : public B, public C {virtual void f();};
+class A
+{
+    virtual void f(){};
+};
+class B
+{
+    virtual void fff(){};
+};
 
-
-int main () {
-    D* pd = new D;
-    A* pa = dynamic_cast<A*>(pd);   // error: 'A' is an ambiguous base of 'D'
-    B* pb = dynamic_cast<B*>(pd);   // first cast to B
-    A* pa2 = dynamic_cast<A*>(pb);   // ok: unambiguous
+int main()
+{
+    A *pa = new A();
+    B *pb = dynamic_cast<B *>(pa); // fails at runtime, not safe;
+    // B not derived from A
+    cout << pa << endl;
+    cout << pb << endl;
 }
