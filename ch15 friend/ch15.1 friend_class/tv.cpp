@@ -1,5 +1,5 @@
 #include <iostream>
-#include "tv.h"
+#include "./tv.h"
 
 bool Tv::volup() {
     if (volume < MaxVal) {
@@ -34,11 +34,11 @@ void Tv::chandown () {
 void Tv::settings() const {
     using std::cout;
     using std::endl;
-    // cout << "TV is " << (state == Off ? "Off" : "On") << endl;
-    // if (state == On) {
-    //     cout << "Volumn setting = " << volume << endl;
-    //     cout << "Channel setting = " << channel << endl;
-    //     cout << "Mode = " << (mode == Antenna ? "Antenna" : "cable") << endl;
-    //     cout << "Input = " << (input == TV ? "TV" : "DVD") << endl;
-    // }
+    cout << "TV is " << (state == Off ? "Off" : "On") << endl;
+    if (state == On) {
+        cout << "Volumn setting = " << volume << endl;
+        cout << "Channel setting = " << channel << endl;
+        cout << "Mode = " << (mode == Antenna ? "Antenna" : "cable") << endl;
+        cout << "Input = " << (input == TV ? "TV" : "DVD") << endl;
+    }
 }

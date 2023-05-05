@@ -140,6 +140,8 @@
         "ratio": "cpp",
         "stdexcept": "cpp",
         "type_traits": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "list": "cpp",
+        "__memory": "cpp"
     }
 }

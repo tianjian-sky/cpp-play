@@ -15,6 +15,10 @@ reinterpret_cast 的一个实际用途是在哈希函数中，即，通过让两
 
 */
 
+/*
+依赖底层的实现，不可移植
+不支持任意的转换
+*/
 #include <iostream>
 using namespace std;
 

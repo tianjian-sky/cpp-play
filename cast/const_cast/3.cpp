@@ -3,6 +3,7 @@
 
 https://zhuanlan.zhihu.com/p/372320706
 
+使用场景：大部分时候是常量，有时又需要修改
 
 1.引用转换，去掉底层const
 2. 指针转换，去掉底层const
