@@ -8,3 +8,5 @@ _CPack_Packages
 cmake_install.cmake
 CPackConfig.*
 cmake/**/build/*.*
+*.a
+*.lib
