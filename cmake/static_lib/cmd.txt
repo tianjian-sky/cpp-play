@@ -1,0 +1,3 @@
+cmake -S . -B ./build
+cmake --build ./build --config Release #不指定--config参数，则默认为Debug模式
+cmake --install ./build --config Release 
