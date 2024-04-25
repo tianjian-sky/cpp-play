@@ -7,6 +7,7 @@ CMakeCache.txt
 _CPack_Packages
 cmake_install.cmake
 CPackConfig.*
-cmake/**/build/*.*
+cmake/**/build
 *.a
 *.lib
+**/.vs

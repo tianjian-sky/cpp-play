@@ -24,6 +24,7 @@ set(CMAKE_INSTALL_PREFIX  ${CMAKE_CURRENT_SOURCE_DIR})
 install(TARGETS mylib ARCHIVE DESTINATION my_static_lib)
 
 set(CPACK_PACKAGE_NAME "my_static_lib")
+set(CPACK_PROJECT_NAME "CpackProjName_static_lib")
 
 # include命令 执行cmake程序
 include(Cpack) # 生成打包相关的配置
