@@ -1,3 +1,10 @@
 **/*.exe
 **/*.gch
 .vscode/*
+CMakeFiles
+Makefile
+CMakeCache.txt
+_CPack_Packages
+cmake_install.cmake
+CPackConfig.*
+cmake/**/build/*.*
