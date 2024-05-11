@@ -1,0 +1,3 @@
+The CMakeSettings.json file contains information that Visual Studio uses for IntelliSense and to construct the command-line arguments that it passes to CMake for a specified configuration and compiler environment. 
+
+https://learn.microsoft.com/en-us/cpp/build/cmakesettings-reference?view=msvc-170

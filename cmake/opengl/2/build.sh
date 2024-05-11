@@ -1,0 +1,1 @@
+g++ ./main.cpp  ./Utils.cpp -framework OpenGL -I/Users/yutianjian/test/cpp-play/cmake/opengl/2 -I/opt/homebrew/include -I/Users/yutianjian/develop/SOIL2/src -I/usr/local/include -L/opt/homebrew/lib -L/Users/yutianjian/develop/SOIL2 -lglfw.3 -lglew -lsoil2  --std=c++11

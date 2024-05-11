@@ -1,3 +1,6 @@
 cmake -S . -B ./build
 cmake --build ./build --config Release #不指定--config参数，则默认为Debug模式
-cmake --install ./build --config Release 
+cmake --install ./build --config Release # --target 指定构建目标
+
+#安装
+cpack -G NSIS
