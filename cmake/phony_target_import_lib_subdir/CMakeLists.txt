@@ -107,7 +107,9 @@ target_include_directories(boost-regex INTERFACE ${BOOST_INCLUDE_DIR})
     # set_target_properties(boost-regex PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/build/lib_boost/libboost_regex.a)
     set_target_properties(boost-regex PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/build/lib_boost/libboost_regex.a)
 
-    # 添加依赖关系
+    # 依赖关系建立
+    # a. 通过target_link_libraries(...)
+    # b. 通过add_dependencies(...) 用于没有明显链接关系情况
     add_dependencies(boost-regex  boost_regex)
 
 # endif()
