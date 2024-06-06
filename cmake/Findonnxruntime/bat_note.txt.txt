@@ -1,0 +1,18 @@
+rem 注释
+:: 注释
+
+setlocal 开始批处理文件中环境改动的本地化操作。在执行 SETLOCAL 之后所做的环境改动只限于批处理文件。要还原原先的设置，必须执行 ENDLOCAL。达到批处理文件结尾时，对于该批处理文件的每个尚未执行的 SETLOCAL 命令，都会有一个隐含的 ENDLOCAL 被执行。
+
+%~dp0 表示批处理文件所在的上级目录
+
+%* 传递给脚本的所有参数
+
+e.g.
+
+echo %~dp0
+setlocal
+set PATH=C:\Program Files\Git\usr\bin;%PATH%
+
+rem Requires a Python install to be available in your PATH
+::python "%~dp0\tools\ci_build\build.py" --build_dir "%~dp0\build\Windows" %*
+python "%~dp0\tools\ci_build\build.py" --build_dir "%~dp0\buildWindows" %*
