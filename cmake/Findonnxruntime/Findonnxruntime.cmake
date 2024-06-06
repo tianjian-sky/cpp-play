@@ -73,10 +73,12 @@ HINTS, PATHS
 Specify directories to search in addition to the default locations. The ENV var sub-option reads paths from a system environment variable.
 ]]
 
+# 指定文件的上层，无法递归查找
 find_path(onnxruntime_INCLUDE_DIR onnxruntime_c_api.h
   HINTS ENV onnxruntime_ROOT
   PATH_SUFFIXES include\\onnxruntime\\core\\session)
 
+# 指定onnxruntime.dll的文件夹，无法递归查找
 find_library(onnxruntime_LIBRARY
   NAMES onnxruntime
   HINTS ENV onnxruntime_ROOT
