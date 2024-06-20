@@ -1,0 +1,2 @@
+1.window上先将cl.exe 添加入path环境变量
+cuda对cl.exe版本有要求，cuda11.0需要cl.exe版本在vs2017-vs2019
