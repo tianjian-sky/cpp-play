@@ -218,6 +218,13 @@ struct MNIST {
     const char* output_names[] = {"Plus214_Output_0"};
 
     Ort::RunOptions run_options;
+
+    /**
+     * 
+     * Run the model returning results 
+     * Run (const RunOptions &run_options, const char *const *input_names, const Value *input_values, size_t input_count, const char *const *output_names, Value *output_values, size_t output_count)
+     * 
+     */
     session_.Run(run_options, input_names, &input_tensor_, 1, output_names, &output_tensor_, 1);
     softmax(results_);
     /**
@@ -523,14 +530,48 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE /*hPrevInstan
   if (!hWnd)
     return FALSE;
 
+  /**
+   * hWnd
+   * 指窗口句柄
+   * nCmdShow
+   * 指定窗口如何显示。如果发送应用程序的程序提供了STARTUPINFO结构，则应用程序第一次调用ShowWindow时该参数被忽略。否则，在
+   * ShowWindow(hWnd, nCmdShow)，则应用程序第一次调用ShowWindow时该参数被忽略。否则，在第一次调用ShowWindow函数时，该值应为在函数WinMain中nCmdShow参数。在随后的调用中，该参数可以为下列值之一：
+   * ：该函数设置指定窗口的显示状态。
+   * 
+   */
   ShowWindow(hWnd, nCmdShow);
 
   MSG msg;
+
+  /**
+   * GetMessage是从调用线程的消息队列里取得一个消息并将其放于指定的结构。
+   * 此函数可取得与指定窗口联系的消息和由PostThreadMessage寄送的线程消息。
+   * 此函数接收一定范围的消息值。GetMessage不接收属于其他线程或应用程序的消息。
+   * 获取消息成功后，线程将从消息队列中删除该消息。函数会一直等待直到有消息到来才有返回值。
+   * 
+   * GetMessage（LPMSG lpMsg，HWND hWnd，UINT wMsgFilterMin，UINT wMsgFilterMax）
+        参数：
+        lpMsg：指向MSG结构的指针，该结构从线程的消息队列里接收消息信息。
+        hWnd：取得其消息的窗口的句柄。当其值取NULL时，GetMessage为任何属于调用线程的窗口检索消息，线程消息通过PostThreadMessage寄送给调用线程。
+        wMsgFilterMin：指定被检索的最小消息值的整数。
+        wMsgFilterMax：指定被检索的最大消息值的整数。
+   */
   while (GetMessage(&msg, NULL, 0, 0)) {
+
+    /**
+     * TranslateMessage( CONST MSG*lpMsg );
+     * 该函数将虚拟键消息转换为字符消息。字符消息被寄送到调用线程的消息队列里，当下一次线程调用函数GetMessage或PeekMessage时被读出。
+     */
     TranslateMessage(&msg);
+    /**
+     * lpmsg：指向含有消息的MSG结构的指针。
+     * LONG DispatchMessage（CONST MSG*lpmsg）
+     * 该函数分发一个消息给窗口程序。通常消息从GetMessage函数获得或者TranslateMessage函数传递的。消息被分发到回调函数（过程函数），作用是消息传递给操作系统，然后操作系统去调用我们的回调函数，也就是说我们在窗体的过程函数中处理消息。
+     */
     DispatchMessage(&msg);
   }
 
+  // DeleteObject，该函数删除一个逻辑笔、画笔、字体、位图、区域或者调色板，释放所有与该对象有关的系统资源，在对象被删除之后，指定的句柄也就失效了。
   DeleteObject(dib_);
   DeleteDC(hdc_dib_);
 
@@ -540,17 +581,119 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE /*hPrevInstan
   return (int)msg.wParam;
 }
 
+/**
+ * typedef LONG_PTR            LRESULT;
+ * _MSC_VER
+ * _MSC_VER是微软公司推出的C/C++编译器在ANSI/ISO C99标准之外扩展的宏定义，用来定义当前微软公司自己的编译器的主版本。需要注意的是，这并不是Visual Studio 的版本号，也不是Visual C++的版本号。
+ * __stdcall
+ * _stdcall是Pascal方式清理C方式压栈，通常用于Win32 Api中，函数采用从右到左的压栈方式
+ *  是函数调用约定的一种，函数调用约定主要约束了两件事：
+ *  1.参数从右向左压入堆栈
+    2.函数被调用者修改堆栈
+    3.函数名(在编译器这个层次)自动加前导的下划线，后面紧跟一个@符号，其后紧跟着参数的尺寸
+ * 
+ * #elif (_MSC_VER >= 800) || defined(_STDCALL_SUPPORTED)
+    #define CALLBACK    __stdcall
+ */
+/**
+ * 
+ * 每个窗口会有一个称为窗口过程的回调函数(WndProc)，它带有四个参数，分别为：
+    窗口句柄(Window Handle) HWND,
+    消息ID(Message ID) UINT,
+    和两个消息参数(wParam, lParam)WPARAM、LPARAM,
+    WndProc的第一个参数hWnd就是当前接收消息的窗口句柄，第二个参数就是被传送过来的消息，第三、第四个参数都是附加在消息上的数据，这和MSG结构体是一样的。
+*/
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
   switch (message) {
+    // WM_PAINT 指示视窗讯息处理程式在显示区域上画一些东西。
     case WM_PAINT: {
+      /**
+       * PAINTSTRUCT 结构包含可用于绘制窗口的工作区的信息。
+       * hdc
+        标识用于绘制要使用的显示上下文。
+        fErase
+        指定背景是否需要重新绘制。 ，如果应用程序应重新绘制背景，它不是 0。 应用程序将绘制背景负责，如果窗口类的窗口创建的，而不用背景画笔 (请参见 WNDCLASS 结构的 hbrBackground 成员的说明。 Windows SDK)。
+        rcPaint
+        指定绘制请求矩形的左上角和右下角。
+        fRestore
+        保留的成员。 窗口在内部使用它。
+        fIncUpdate
+        保留的成员。 窗口在内部使用它。
+        rgbReserved [16]
+        保留的成员。 保留窗口内部使用的内存块。
+            * 
+       * 
+       */
       PAINTSTRUCT ps;
+      /**
+       * BeginPaint函数为指定窗口进行绘图工作的准备，并用将和绘图有关的信息填充到一个PAINTSTRUCT结构中。
+       * BOOL StretchBlt(HDC hdcDest, int nXOriginDest, int nYOriginDest, int nWidthDest, int nHeightDest, HDC hdcSrc, int nXOriginSrc, int nYOriginSrc, int nWidthSrc, int nHeightSrc, DWORD dwRop)；
+       */
       HDC hdc = BeginPaint(hWnd, &ps);
 
       // Draw the image
+      /**
+       * StretchBlt，函数名。该函数从源矩形中复制一个位图到目标矩形，必要时按目标设备设置的模式进行图像的拉伸或压缩。
+       * BOOL StretchBlt(HDC hdcDest, int nXOriginDest, int nYOriginDest, int nWidthDest, int nHeightDest, HDC hdcSrc, int nXOriginSrc, int nYOriginSrc, int nWidthSrc, int nHeightSrc, DWORD dwRop)；
+       * hdcDest：指向目标设备环境的句柄。
+        nXOriginDest：指定目标矩形左上角的X轴坐标，按逻辑单位表示坐标。
+        nYOriginDest：指定目标矩形左上角的Y轴坐标，按逻辑单位表示坐标。
+        nWidthDest：指定目标矩形的宽度，按逻辑单位表示宽度。
+        nHeightDest：指定目标矩形的高度，按逻辑单位表示高度。
+        hdcSrc：指向源设备环境的句柄。
+        nXOriginSrc：指向源矩形区域左上角的X轴坐标，按逻辑单位表示坐标。
+        nYOriginSrc：指向源矩形区域左上角的Y轴坐标，按逻辑单位表示坐标。
+        nWidthSrc：指定源矩形的宽度，按逻辑单位表示宽度。
+        nHeightSrc：指定源矩形的高度，按逻辑单位表示高度。
+        dwRop：指定要进行的光栅操作。光栅操作码定义了系统如何在输出操作中组合颜色，这些操作包括刷子、源位图和目标位图等对象。参考BitBlt可了解常用的光栅操作码列表。
+            下面列出了一些常见的光栅操作代码：
+            BLACKNESS：表示使用与物理调色板的索引0相关的色彩来填充目标矩形区域，（对缺省的物理调色板而言，该颜色为黑色）。
+            DSTINVERT：表示使目标矩形区域颜色取反。
+            MERGECOPY：表示使用布尔型的AND（与）操作符将源矩形区域的颜色与特定模式组合一起。
+            MERGEPAINT：通过使用布尔型的OR（或）操作符将反向的源矩形区域的颜色与目标矩形区域的颜色合并。
+            NOTSRCCOPY：将源矩形区域颜色取反，再拷贝到目标矩形区域。
+            NOTSRCERASE：使用布尔类型的OR（或）操作符组合源和目标矩形区域的颜色值，然后将合成的颜色取反。
+            PATCOPY：将特定的模式拷贝到目标位图上。
+            PATPAINT：通过使用布尔OR（或）操作符将源矩形区域取反后的颜色值与特定模式的颜色合并。然后使用OR（或）操作符将该操作的结果与目标矩形区域内的颜色合并。
+            PATINVERT：通过使用XOR（异或）操作符将源和目标矩形区域内的颜色合并。
+            SRCAND：通过使用AND（与）操作符来将源和目标矩形区域内的颜色合并。
+            SRCCOPY：将源矩形区域直接拷贝到目标矩形区域。
+            SRCERASE：通过使用AND（与）操作符将目标矩形区域颜色取反后与源矩形区域的颜色值合并。
+            SRCINVERT：通过使用布尔型的XOR（异或）操作符将源和目标矩形区域的颜色合并。
+            SRCPAINT：通过使用布尔型的OR（或）操作符将源和目标矩形区域的颜色合并。
+            WHITENESS：使用与物理调色板中索引1有关的颜色填充目标矩形区域。（对于缺省物理调色板来说，这个颜色就是白色）。
+       * 
+       */
       StretchBlt(hdc, drawing_area_inset_, drawing_area_inset_, drawing_area_width_, drawing_area_height_, hdc_dib_, 0,
                  0, MNIST::width_, MNIST::height_, SRCCOPY);
+      /**
+       * GetStockObject是一个Windows API函数，该函数检索预定义的备用笔、刷子、字体或者调色板的句柄，函数原型是HGDIOBJ GetStockObject(int)。
+       * fnObject：指定对象的类型，该参数可取如下值之一；
+        BLACK_BRUSH：黑色画刷；DKGRAY_BRUSH：暗灰色画刷；
+        DC_BRUSH：在Windows98,Windows NT 5.0和以后版本中为纯颜色画刷，缺省色为白色，可以用SetDCBrushColor函数改变颜色，更多的信息参见以下的注释部分。
+        GRAY_BRUSH：灰色画刷笔；
+        HOLLOW_BRUSH：空画刷（相当于NULL_BRUSH）；
+        NULL_BRUSH：空画刷（相当于HOLLOW_BRUSH）；
+        LTGRAY_BRUSH：亮灰色画刷；
+        WHITE_BRUSH：白色画刷；
+        BLACK_PEN：黑色钢笔；
+        DC_PEN：在Windows98、Windows NT 5.0和以后版本中为纯色钢笔，缺省色为白色，使用SetDCPenColor函数可以改变色彩，更多的信息，参见下面的注释部分。
+        WHITE_PEN：白色钢笔；
+        ANSI_FIXED_FONT：在Windows中为固定间距（等宽）系统字体；
+        ANSI_VAR_FONT：在Windows中为变间距（比例间距）系统字体；
+        DEVICE_DEFAUCT_FONT：在WindowsNT中为设备相关字体；
+        DEFAULT_GUI_FONT：用户界面对象缺省字体，如菜单和对话框；
+        OEM_FIXED_FONT：原始设备制造商（OEM）相关固定间距（等宽）字体；
+        SYSTEM_FONT：系统字体，在缺省情况下，系统使用系统字体绘制菜单，对话框控制和文本；
+        SYSTEM_FIXED_FONT：固定间距（等宽）系统字体，该对象仅提供给兼容16位Windows版本；
+        DEFAULT_PALETTE：缺省调色板，该调色板由系统调色板中的静态色彩组成
+       * 
+       */
       SelectObject(hdc, GetStockObject(BLACK_PEN));
       SelectObject(hdc, GetStockObject(NULL_BRUSH));
+      /**
+       * Rectangle是一个函数，使用该函数画一个矩形，可以用当前的画笔画矩形轮廓，用当前画刷进行填充。
+       */
       Rectangle(hdc, drawing_area_inset_, drawing_area_inset_, drawing_area_inset_ + drawing_area_width_,
                 drawing_area_inset_ + drawing_area_height_);
 
@@ -558,6 +701,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
       constexpr int graph_width = 64;
       SelectObject(hdc, brush_bars_);
 
+
+      /**
+       * min_element Finds the smallest element in the range 
+       */
       auto least = *std::min_element(mnist_->results_.begin(), mnist_->results_.end());
       auto greatest = mnist_->results_[mnist_->result_];
       auto range = greatest - least;
@@ -567,30 +714,64 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
       // Hilight the winner
       RECT rc{graphs_left, static_cast<LONG>(mnist_->result_) * 16, graphs_left + graph_width + 128,
               static_cast<LONG>(mnist_->result_ + 1) * 16};
+    
       FillRect(hdc, &rc, brush_winner_);
 
       // For every entry, draw the odds and the graph for it
+
+      /**
+       * SetBkMode，Windows API，设置指定DC的背景混合模式，背景混合模式用于与文本，填充画刷和当画笔不是实线时。
+       */
       SetBkMode(hdc, TRANSPARENT);
       wchar_t value[80];
       for (unsigned i = 0; i < 10; i++) {
         int y = 16 * i;
         float result = mnist_->results_[i];
-
+        /**
+         * 函数wsprintf [1]()将一系列的字符和数值输入到缓冲区。
+         * 返回写入的长度
+         */
         auto length = wsprintf(value, L"%2d: %d.%02d", i, int(result), abs(int(result * 100) % 100));
+
+        /**
+         * TextOut，函数名。该函数用当前选择的字体、背景颜色和正文颜色将一个字符串写到指定位置。
+         * hdc
+            [输入] 设备环境的句柄
+            nXStart
+            [输入] 指定用于字符串对齐的基准点的逻辑X坐标。
+            nYStart
+            [输入] 指定用于字符串对齐的基准点的逻辑Y坐标。
+            lpString
+            [输入] 指向将被绘制字符串的指针。此字符串不必为以\0结束的，因为cbString中指定了字符串的长度。
+            cbString
+            [输入] 指定了字符串的长度。
+         */
         TextOut(hdc, graphs_left + graph_width + 5, y, value, length);
 
         Rectangle(hdc, graphs_zero, y + 1, static_cast<int>(graphs_zero + result * graph_width / range), y + 14);
       }
 
       // Draw the zero line
+      /***
+       * MoveToEx是函数，功能是将当前绘图位置移动到某个具体的点，同时也可获得之前位置的坐标。
+       */
       MoveToEx(hdc, graphs_zero, 0, nullptr);
       LineTo(hdc, graphs_zero, 16 * 10);
-
+    /**
+     * BeginPaint是函数为指定窗口进行绘图的开始。EndPaint是绘图的结束，释放绘图区，相似函数，GetDC () 与ReleaseDC () 。前者与后者的区别是，利用从GetDC()传回的句柄可以在整个客户区上绘图。
+     */
       EndPaint(hWnd, &ps);
       return 0;
     }
-
+    /**
+     * WM_LBUTTONDOWN是一个Windows消息，该消息当用户在window客户区域点击鼠标左键的时候发送。
+     */
     case WM_LBUTTONDOWN: {
+      /**
+       * 将鼠标捕获设置为属于当前线程的指定窗口。 
+       * 当鼠标悬停在捕获窗口上时，或者在鼠标悬停在捕获窗口上且按钮仍然向下的情况下按下鼠标按钮时，SetCapture 将捕获鼠标输入。 一次只会有一个窗口捕获鼠标。
+        如果鼠标光标位于另一个线程创建的窗口上，则仅当鼠标按钮按下时，系统才会将鼠标输入定向到指定的窗口。
+        */
       SetCapture(hWnd);
       painting_ = true;
       int x = (GET_X_LPARAM(lParam) - drawing_area_inset_) / drawing_area_scale_;
@@ -608,6 +789,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
       }
       return 0;
 
+    /**
+     * 发送到丢失鼠标捕获的窗口。
+     */
     case WM_CAPTURECHANGED:
       painting_ = false;
       return 0;
@@ -615,7 +799,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
     case WM_LBUTTONUP:
       ReleaseCapture();
       ConvertDibToMnist();
+      /**
+       * 
+       * Run the model returning results in an Ort allocated vector.
+       * The caller provides a list of inputs and a list of the desired outputs to return.
+       */
       mnist_->Run();
+       /**
+       * InvalidateRect是一个函数，该函数向指定的窗体更新区域添加一个矩形，然后窗体跟新区域的这一部分将被重新绘制。
+       * 
+       * BOOL InvalidateRect（HWND hWnd,CONST RECT *lpRect,BOOL bErase）;
+       *    hWnd：要更新的客户区所在的窗体的句柄。如果为NULL，则系统将在函数返回前重新绘制所有的窗口, 然后发送 WM_ERASEBKGND 和 WM_PAINT 给窗口过程处理函数。
+            lpRect：无效区域的矩形代表，它是一个结构体指针，存放着矩形的大小。如果为NULL，全部的窗口客户区域将被增加到更新区域中。
+            bErase：指出无效矩形被标记为有效后，是否重画该区域，重画时用预先定义好的画刷。当指定TRUE时需要重画。
+       */
       InvalidateRect(hWnd, nullptr, true);
       return 0;
 
@@ -623,13 +820,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
     {
       RECT rect{0, 0, MNIST::width_, MNIST::height_};
       FillRect(hdc_dib_, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
+      /**
+       * InvalidateRect是一个函数，该函数向指定的窗体更新区域添加一个矩形，然后窗体跟新区域的这一部分将被重新绘制。
+       */
       InvalidateRect(hWnd, nullptr, false);
       return 0;
     }
-
+    /*
+    * WM_DESTROY
+    * 窗口销毁后（调用DestroyWindow（）后），消息队列得到的消息。
+    */
     case WM_DESTROY:
+      /**
+       * PostQuitMessage，函数名。该函数向系统表明有个线程有终止请求。通常用来响应WM_DESTROY消息。
+       */
       PostQuitMessage(0);
       return 0;
   }
+  /**
+   * DefWindowProc函数调用缺省的窗口过程来为应用程序没有处理的任何窗口消息提供缺省的处理。该函数确保每一个消息得到处理。
+   * hWnd：指向接收消息的窗口过程的句柄。
+    Msg：指定消息类型。
+    wParam：指定其余的、消息特定的信息。该参数的内容与Msg参数值有关。
+    IParam：指定其余的、消息特定的信息。该参数的内容与Msg参数值有关。
+    返回值：返回值就是消息处理结果，它与发送的消息有关。
+  */
   return DefWindowProc(hWnd, message, wParam, lParam);
 }
