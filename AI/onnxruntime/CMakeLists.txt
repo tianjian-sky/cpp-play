@@ -16,19 +16,20 @@ endif()
 option(onnxruntime_USE_CUDA "Build with CUDA support" OFF)
 option(onnxruntime_USE_TENSORRT "Build with TensorRT support" OFF)
 set(LIBPNG_ROOTDIR D:\\develop\\test\\libpng-1.6.43\\build\\insall_debug)
-set(ONNXRUNTIME_ROOTDIR D:\\develop\\test\\onnxruntime)
+
 include(FetchContent)
-message("ONNXRUNTIME_ROOTDIR:${ONNXRUNTIME_ROOTDIR}")
+
 set(CMAKE_CXX_STANDARD 17)
 
 if(NOT ONNXRUNTIME_ROOTDIR)
   if(WIN32)
-    set(ONNXRUNTIME_ROOTDIR "C:/Program Files/onnxruntime")
+    set(ONNXRUNTIME_ROOTDIR "D:\\develop\\test\\onnxruntime")
+    set(ONNXRUNTIME_LIBDIR "${ONNXRUNTIME_ROOTDIR}\\buildWindowsNN\\RelWithDebInfo\\RelWithDebInfo")
 else()
     set(ONNXRUNTIME_ROOTDIR "/usr/local")
   endif()
 endif()
-
+message("ONNXRUNTIME_ROOTDIR:${ONNXRUNTIME_ROOTDIR}")
 # The ORT package has a different include directory structure to a local install via cmake.
 # We added the path for the pre-built package above. Add the path for a local install to support either usage.
 # TODO: If we want to support additional EPs being loadable from a local install we also need to add EP specific
@@ -37,8 +38,21 @@ include_directories("${ONNXRUNTIME_ROOTDIR}/include"                           #
                     "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime"               # Linux local install to /usr/local
                     "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime/core/session") # Windows local install
 
-link_directories("${ONNXRUNTIME_ROOTDIR}\\buildWindowsNN\\RelWithDebInfo\\RelWithDebInfo")
+link_directories(ONNXRUNTIME_LIBDIR)
 
+
+#[===[==
+    wil
+    Windows Implementation Library
+    The Windows Implementation Libraries (WIL) is a header-only C++ library created to make life easier for developers on Windows through readable type-safe C++ interfaces for common Windows coding patterns.
+
+    include/wil/resource.h (documentation): Smart pointers and auto-releasing resource wrappers to let you manage Windows API HANDLEs, HWNDs, and other resources and resource handles with RAII semantics.
+    include/wil/win32_helpers.h (documentation): Wrappers for API functions that save you the work of manually specifying buffer sizes, calling a function twice to get the needed buffer size and then allocate and pass the right-size buffer, casting or converting between types, and so on.
+    include/wil/registry.h (documentation): Type-safe functions to read from, write to, and watch the registry. Also, registry watchers that can call a lambda function or a callback function you provide whenever a certain tree within the Windows registry changes.
+    include/wil/result.h (documentation): Preprocessor macros to help you check for errors from Windows API functions, in many of the myriad ways those errors are reported, and surface them as error codes or C++ exceptions in your code.
+    include/wil/Tracelogging.h: This file contains the convenience macros that enable developers define and log telemetry. These macros use TraceLogging API to log data. This data can be viewed in tools such as Windows Performance Analyzer.
+
+#==]===]
 if(WIN32)
   add_library(wil INTERFACE)
 
@@ -91,7 +105,9 @@ endfunction()
 # some examples require a Windows build environment
 if(WIN32)
 #   add_subdirectory(imagenet)
-  add_subdirectory(1_MINST)
+#   add_subdirectory(1_MINST)
+# add_subdirectory(2_MODEL_EXPLORER)
+add_subdirectory("3_OpenVINO_EP\\windows")
 endif()
 # add_subdirectory(squeezenet)
 if(WIN32 OR PNG_FOUND)
