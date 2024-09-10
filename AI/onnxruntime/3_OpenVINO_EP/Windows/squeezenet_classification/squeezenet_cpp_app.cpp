@@ -147,10 +147,12 @@ void printHelp() {
 
 int main(int argc, char* argv[])
 {
+    try {
+      
     bool useOPENVINO{true};
     const char* useOPENVINOFlag = "--use_openvino";
     const char* useCPUFlag = "--use_cpu";
-
+    std::cout << argc << std::endl;
     if(argc == 2) {
         std::string option = argv[1];
         if (option == "--help" || option == "-help" || option == "--h" || option == "-h") {
@@ -177,7 +179,7 @@ int main(int argc, char* argv[])
     }
 
     std::string instanceName{"image-classification-inference"};
-	
+	 std::cout << 3 << std::endl;
     #ifdef _WIN32
         std::string str_arg2 = argv[2];
         std::wstring wide_string_arg2 = std::wstring(str_arg2.begin(), str_arg2.end());
@@ -190,18 +192,23 @@ int main(int argc, char* argv[])
             throw std::runtime_error("[ ERROR ] The ModelFilepath is not correct. Make sure you are setting the path to an onnx model file (.onnx)");
         }
     #endif
+     std::cout << 4 << std::endl;
     std::string imageFilepath = argv[3];
 
     // Validate ImageFilePath
     imageFileExtension(imageFilepath);
+     std::cout <<imageFilepath << std::endl;
     if(!imageFileExtension(imageFilepath)) {
+         std::cout << 555 << std::endl;
         throw std::runtime_error("[ ERROR ] The imageFilepath doesn't have correct image extension. Choose from jpeg, jpg, gif, png, PNG, jfif");
     }
+       std::cout << 6 << std::endl;
     std::ifstream f(imageFilepath.c_str());
     if(!f.good()) {
+           std::cout << 7 << std::endl;
         throw std::runtime_error("[ ERROR ] The imageFilepath is not set correctly or doesn't exist");
     }
-
+ std::cout << 8 << std::endl;
     // Validate LabelFilePath
     std::string labelFilepath = argv[4];
     if(!checkLabelFileExtension(labelFilepath)) {
@@ -221,7 +228,9 @@ int main(int argc, char* argv[])
         OrtOpenVINOProviderOptions options;
         options.device_type = "CPU_FP32"; //Other options are: GPU_FP32, GPU_FP16, MYRIAD_FP16
         std::cout << "OpenVINO device type is set to: " << options.device_type << std::endl;
+         std::cout << -1 << std::endl;
         sessionOptions.AppendExecutionProvider_OpenVINO(options);
+         std::cout << 0 << std::endl;
     }
     
     // Sets graph optimization level
@@ -231,17 +240,18 @@ int main(int argc, char* argv[])
     // removals) ORT_ENABLE_EXTENDED -> To enable extended optimizations
     // (Includes level 1 + more complex optimizations like node fusions)
     // ORT_ENABLE_ALL -> To Enable All possible optimizations
+    std::cout << 1 << std::endl;
     sessionOptions.SetGraphOptimizationLevel(
         GraphOptimizationLevel::ORT_DISABLE_ALL);
-
+    
     //Creation: The Ort::Session is created here
     Ort::Session session(env, modelFilepath.c_str(), sessionOptions);
-
+ std::cout << 2 << std::endl;
     Ort::AllocatorWithDefaultOptions allocator;
 
     size_t numInputNodes = session.GetInputCount();
     size_t numOutputNodes = session.GetOutputCount();
-
+ std::cout << 3 << std::endl;
     std::cout << "Number of Input Nodes: " << numInputNodes << std::endl;
     std::cout << "Number of Output Nodes: " << numOutputNodes << std::endl;
 
@@ -399,5 +409,11 @@ int main(int argc, char* argv[])
               << " ms" << std::endl;
     size_t mem_size = GetPeakWorkingSetSize();
     std::cout << "Peak working set size: " << mem_size << " bytes" << std::endl;
+  
+    }
+    catch (std::runtime_error& e) {
+      std::cout << "Exception occurred" << std::endl << e.what();
+    }
+
     return 0;
 }

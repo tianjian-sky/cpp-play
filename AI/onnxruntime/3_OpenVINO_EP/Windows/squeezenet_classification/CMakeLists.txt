@@ -23,3 +23,11 @@ foreach(DLL_DIR IN LISTS DLL_DIRS)
 				$<TARGET_FILE_DIR:run_squeezenet>)
   endforeach()
 endforeach()
+# 拷贝dll
+file(GLOB DEP_FILES ${CMAKE_CURRENT_LIST_DIR}/deps/*.*)
+foreach(ORTDll IN LISTS DEP_FILES)
+add_custom_command(TARGET run_squeezenet POST_BUILD 
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${ORTDll}"              
+            $<TARGET_FILE_DIR:run_squeezenet>)
+endforeach()

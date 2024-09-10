@@ -14,6 +14,9 @@ option(ONNXRUNTIME_ROOTDIR "onnxruntime root dir")
 option(OPENCL_LIB "OPENCL_LIB" "D:\\develop\\test\\OpenCL-SDK-main\\install\\lib")
 option(OPENCL_INCLUDE "OPENCL_INCLUDE" "D:\\develop\\test\\OpenCL-SDK-main\\install\\include")
 
+# set onnxruntime_USE_OPENVINO
+set(onnxruntime_USE_OPENVINO ON)
+set(ONNXRUNTIME_ROOTDIR "D:\\develop\\test\\onnxruntime")
 if(NOT ONNXRUNTIME_ROOTDIR)
   set(ONNXRUNTIME_ROOTDIR "C:/Program Files/onnxruntime")
 endif()

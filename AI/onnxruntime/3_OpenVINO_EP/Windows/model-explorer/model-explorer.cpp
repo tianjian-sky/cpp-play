@@ -44,6 +44,16 @@ int calculate_product(const std::vector<int64_t>& v) {
 
 using namespace std;
 
+/**
+ * 
+ * OpenVINO™ 工具包是一个开源工具包，它通过降低延迟和提高吞吐量来加速 AI 推理，同时保持精度，减少模型占用空间，并优化硬件使用。它简化了 AI 开发，并在计算机视觉、大型语言模型（LLM）和生成式 AI 等领域中集成深度学习，并支持来自 PyTorch、TensorFlow、ONNX 等流行框架的模型。用户可以转换和优化模型，并在包括英特尔®硬件在内的多种环境中进行部署，无论是在本地设备、浏览器还是云端。
+ 
+ * OpenVINO is an open-source toolkit for optimizing and deploying deep learning models from cloud to edge. It accelerates deep learning inference across various use cases, such as generative AI, video, audio, and language with models from popular frameworks like PyTorch, TensorFlow, ONNX, and more. Convert and optimize models, and deploy across a mix of Intel® hardware and environments, on-premises and on-device, in the browser or in the cloud.
+ * 
+ * https://github.com/openvinotoolkit/openvino/blob/2024.3.0/docs/dev/build_windows.md
+ * 
+ */
+
 int main(int argc, char** argv) {
   if (argc != 2) {
     cout << "Usage: model-explorer.exe <onnx_model.onnx>" << endl;
@@ -52,7 +62,22 @@ int main(int argc, char** argv) {
 
 #ifdef _WIN32
   std::string str = argv[1];
+  cout << "model path:" << str << endl;
+  /**
+   * std::wstring
+   * This is an instantiation of the basic_string class template that uses wchar_t as the character type,
+   * 
+   * wchar_t
+   * char是8位字符类型，最多只能包含256种字符，许多外文字符集所含的字符数目超过256个，char型无法表示。
+    wchar_t数据类型一般为16位或32位，但不同的C或C++库有不同的规定，如GNU Libc规定wchar_t为32位，总之，wchar_t所能表示的字符数远超char型。
+   * 
+   */
   std::wstring wide_string = std::wstring(str.begin(), str.end());
+
+/**
+   * ORTCHAR_T 定义在onnxruntime_c_api.h中
+   * #define ORTCHAR_T wchar_t
+   */
   std::basic_string<ORTCHAR_T> model_file = std::basic_string<ORTCHAR_T>(wide_string);
 #else
   std::string model_file = argv[1];
@@ -63,14 +88,18 @@ int main(int argc, char** argv) {
   Ort::SessionOptions session_options;
   //Appending OpenVINO Execution Provider API
   #ifdef USE_OPENVINO
+      cout << "USE_OPENVINO:" << 1 << endl;
     // Using OPENVINO backend
     OrtOpenVINOProviderOptions options;
     options.device_type = "CPU_FP32"; //Other options are: GPU_FP32, GPU_FP16, MYRIAD_FP16
     std::cout << "OpenVINO device type is set to: " << options.device_type << std::endl;
+    cout << "before AppendExecutionProvider_OpenVINO" << endl;
     session_options.AppendExecutionProvider_OpenVINO(options);
+    cout << "after AppendExecutionProvider_OpenVINO" << endl;
   #endif
+  cout << "before session" << endl;
   Ort::Experimental::Session session = Ort::Experimental::Session(env, model_file, session_options);  // access experimental components via the Experimental namespace
-
+    cout << "after session" << endl;
   // print name/shape of inputs
   std::vector<std::string> input_names = session.GetInputNames();
   std::vector<std::vector<int64_t> > input_shapes = session.GetInputShapes();
