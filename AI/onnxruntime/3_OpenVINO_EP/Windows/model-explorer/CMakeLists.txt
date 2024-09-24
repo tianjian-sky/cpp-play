@@ -1,8 +1,8 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-add_executable(model-explorer model-explorer.cpp)
-target_link_libraries(model-explorer PRIVATE onnxruntime)
+add_executable(model-explorer-openvino model-explorer.cpp)
+target_link_libraries(model-explorer-openvino PRIVATE onnxruntime)
 
 #In onnxruntime deafault install path, the required dlls are in lib and bin folders
 set(DLL_DIRS "${ONNXRUNTIME_ROOTDIR}/lib;${ONNXRUNTIME_ROOTDIR}/bin")

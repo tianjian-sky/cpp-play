@@ -38,7 +38,7 @@ include_directories("${ONNXRUNTIME_ROOTDIR}/include"                           #
                     "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime"               # Linux local install to /usr/local
                     "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime/core/session") # Windows local install
 
-link_directories(ONNXRUNTIME_LIBDIR)
+link_directories("${ONNXRUNTIME_LIBDIR}")
 
 
 #[===[==
@@ -94,7 +94,7 @@ endif()
 # the output dir. Define a function to do so. This is called from the cmake file in the subdirectories.
 function(copy_ort_dlls target_name)
   if (MSVC)
-      file(GLOB ORT_DLLS ${ONNXRUNTIME_ROOTDIR}/bin/*.dll)
+      file(GLOB ORT_DLLS ${ONNXRUNTIME_LIBDIR}/*.dll)
       foreach(ORT_DLL ${ORT_DLLS})
           add_custom_command(TARGET ${target_name} POST_BUILD
                             COMMAND ${CMAKE_COMMAND} -E copy ${ORT_DLL}  $<TARGET_FILE_DIR:${target_name}>)
@@ -105,9 +105,9 @@ endfunction()
 # some examples require a Windows build environment
 if(WIN32)
 #   add_subdirectory(imagenet)
-#   add_subdirectory(1_MINST)
-# add_subdirectory(2_MODEL_EXPLORER)
-add_subdirectory("3_OpenVINO_EP\\windows")
+  add_subdirectory(1_MINST)
+  add_subdirectory(2_MODEL_EXPLORER)
+  add_subdirectory("3_OpenVINO_EP\\windows")
 endif()
 # add_subdirectory(squeezenet)
 if(WIN32 OR PNG_FOUND)

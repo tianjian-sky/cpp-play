@@ -26,7 +26,7 @@
 
 * 安装Chocolatey (通过管理员方式打开cmd)
 * 通过Chocolatey 安装shellCheck
-* 下载模型
+* 下载模型 
 * 拷贝缺少的dll到调用onnxruntime.dll，openvino.dll的exe文件夹处 ,可通过
 
 ```
