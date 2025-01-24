@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.01)
 project("opengl_1" VERSION 1.0.1 DESCRIPTION "opengl 1" HOMEPAGE_URL "github.com" LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ./dist)
+# SET(CMAKE_CXX_COMPILER /usr/bin/g++) mac上如果不用xcode的构建工具，则设置此选项
 SET(CMAKE_CACHEFILE_DIR ./cache)
 # set(CMAKE_BUILD_DIRECTORY ./build)
 # set(CMAKE_BUILD_FILES_DIRECTORY ./build_file)
